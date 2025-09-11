@@ -27,3 +27,5 @@ WHERE tytul = 'Harry Potter';
 ALTER TABLE ksiazka
 ADD id int primary key
 AUTO_INCREMENT;
+
+
