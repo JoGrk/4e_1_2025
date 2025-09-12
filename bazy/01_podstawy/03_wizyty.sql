@@ -13,11 +13,29 @@ CREATE TABLE wizyty(
 INSERT INTO wizyty
 VALUES
 ('Jan','Kowalski','123456789','2000-12-9','Leczenie');
--- Usuń wizytę drugiego klienta (dane klienta powinny pozostać w bazie)
+INSERT INTO wizyty
+VALUES
+(NULL,'Jan','Kowalski','123456789','2000-12-10','Profilaktyka');
+INSERT INTO wizyty
+VALUES
+('Paweł','Kowalczyk','987654321','2000-12-20','Kontrola');
+select * from wizyty;
+
+ALTER TABLE wizyty 
+ADD id int primary key AUTO_INCREMENT first; 
+
+DELETE FROM wizyty
+WHERE id = 3;
+
+-- Usuń wizytę drugiego klienta (dane klienta powinny pozostać w bazie) 
 
 -- Dodaj wizytę pierwszego klienta, jeszcze raz profilaktyka - ale to trudne słowo i zrób w nim literówkę
-
+INSERT INTO wizyty
+VALUES
+(NULL,'Jan','Kowalski','123456789','2000-12-10','Profliaktyka');
 -- Wyświetl wszystkie wizyty profilaktyczne
-
+SELECT *
+FROM wizyty
+WHERE typ='Profilaktyka';
 -- Popraw strukturę tabel bazy wizyty
 
