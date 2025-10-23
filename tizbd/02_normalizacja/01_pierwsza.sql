@@ -87,13 +87,37 @@ FROM Pracownicy
 ORDER BY nazwisko;
 
 -- 1. Każda porządna tabela powinna posiadać klucz, dodaj pole jeśli trzeba. 
-
+ALTER TABLE Pracownicy
+ADD primary key(id_pracownika,jezyk);
 
 
 -- 2. Jan Malinowski poznał nowy język (CSS) - dopisz do tabeli.
+INSERT INTO Pracownicy
+(id_pracownika,jezyk)
+VALUES
+(3, 'CSS');
+
 
 -- 3. Antoni Malinowski poznał nowy język - JavaScript i zmienił adres na Naklo nad Notecia, Staszica 1 - dopisz nowy wiersz do tabeli
+INSERT INTO Pracownicy
+VALUES
+(2, 'Antoni','Malinowski','JavaScript','Naklo nad Notecia','1','Staszica')
 
+SELECT imie, nazwisko
+FROM Pracownicy
+WHERE jezyk='CSS';
+
+SELECT DISTINCT imie, nazwisko, miejscowosc
+FROM Pracownicy
+WHERE imie='Antoni' and nazwisko='Malinowski';
 -- 4. Usuwamy informację o znajomości PHP (bo tak)
+DELETE FROM Pracownicy 
+WHERE jezyk='PHP';
+
+SELECT DISTINCT imie, nazwisko, miejscowosc
+FROM Pracownicy
+WHERE imie='Jan' and nazwisko='Kowalski';
+
+
 
 -- 5. Popraw strukturę tabeli tak, aby nie było tych problemów (redundacja, anomalia wstawiania, aktualizacji, usuwania)
