@@ -10,6 +10,8 @@
             FROM filmy JOIN rezyserzy ON filmy.RezyserID = rezyserzy.IDRezyser";
     $result = $link -> query($sql);
     $movies = $result -> fetch_all(1);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
