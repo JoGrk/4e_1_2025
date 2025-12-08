@@ -16,7 +16,7 @@
     ";
 
     $result = $link -> query($sql);
-    $rooms = $result -> fetch_all(1);
+    $rooms2 = $result -> fetch_all(1);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +40,7 @@
             <td>['cena']</td>
         </tr> -->
         <?php
-        foreach($rooms AS $room){
+        foreach($rooms2 AS $room){
             echo"
                 <tr>
             <td>{$room['id']}</td>
