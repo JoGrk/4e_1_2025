@@ -40,7 +40,7 @@
             <td>['cena']</td>
         </tr> -->
         <?php
-        foreach($rooms2 AS $room){
+        foreach($rooms AS $room){
             echo"
                 <tr>
             <td>{$room['id']}</td>
