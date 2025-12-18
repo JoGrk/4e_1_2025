@@ -1,0 +1,13 @@
+table, th, td {
+    border: 1px black solid;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+.statistic{
+    width: 30rem;
+    border: 2px green solid;
+    border-radius: 8px;
+}
