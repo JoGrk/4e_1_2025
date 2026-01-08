@@ -14,7 +14,16 @@
             WHERE staz >10; ";
     $result = $link -> query($sql);
     $workers = $result -> fetch_all(1);
-?>
+
+    $sql = "SELECT
+                nazwa,
+                ROUND(AVG(pensja),2) AS srednia_pensja
+            FROM pracownicy
+                inner join stanowiska on pracownicy.stanowiska_id=stanowiska.id
+            GROUP BY stanowiska.id;";
+    $result = $link -> query($sql);
+    $avgsalaries = $result -> fetch_all(1);
+            ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,12 +91,28 @@
                 </tr>
                 ";
             }
+
         ?>
 
     </table>
     <hr>
     <h2>Średnie pensje ze względu na rodzaj stanowiska”</h2>
+    
     <!-- skrypt 3 -->
+     <!-- <section class="statistic">
+        <h3>[nazwa]</h3>
+        <p>średnia pensja na stanowisku [stanowisko] wynosi: [srednia_pensja]</p>
+     </section> -->
+     <?php
+     foreach($avgsalaries as $avgsalary){
+        echo "
+        <section class='statistic'>
+        <h3>{$avgsalary['nazwa']}</h3>
+        <p>średnia pensja na stanowisku {$avgsalary['nazwa']} wynosi: {$avgsalary['srednia_pensja']}</p>
+     </section>
+        ";
+     }
+     ?>
 </body>
 </html>
 
