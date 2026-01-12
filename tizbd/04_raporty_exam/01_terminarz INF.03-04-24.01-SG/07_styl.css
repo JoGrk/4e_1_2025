@@ -18,8 +18,20 @@ body{
     width: 70%;
 }
 
+header{
+    display: flex;
+}
 
-main div {
+img{
+    height: 140px;
+}
+
+main{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar{
     background-color: #9FA8DA;
     width: 160px;
     height: 85px;
@@ -29,7 +41,7 @@ main div {
 }
 
 
-main div:hover {
+.calendar:hover{
     background-color: #6F79A8;
     color: white;
 }
