@@ -1,0 +1,36 @@
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+div{
+    background-color:  #6F79A8;
+    color: whitesmoke;
+    height: 140px;
+}
+
+.blok1{
+    width: 30%;
+    
+}
+
+.blok2{
+    width: 70%;
+}
+
+main{
+    background-color: #9FA8DA;
+    width: 160px;
+    height: 85px;
+    margin: 5px;
+    border: 1px, solid, #6F79A8;
+    tu ma być to z tym tekstem
+    to z zmianą kolory gdy najedzie
+}
+
+
+footer{
+    background-color: #6F79A8;
+    color: whitesmoke;
+    padding: 5px;
+    text-align: right;
+}

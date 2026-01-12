@@ -21,4 +21,3 @@ SELECT
 FROM zadania
 WHERE wpis LIKE 'S%';
 
---  – Zapytanie 4: aktualizujące pole wpis dla zadania w dniu 2020-07-18, nowy wpis to „Wycieczka nad  morze” 
