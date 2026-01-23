@@ -1,0 +1,79 @@
+-- ; 1. Klienci, którzy niczego nie zamówili
+
+SELECT CustomerName
+FROM customers
+    LEFT JOIN orders ON customers.CustomerID = orders.CustomerID
+WHERE OrderDate IS NULL;
+    
+
+-- ; 2. Towary, które nie zostały kupione
+SELECT productName
+FROM products
+    LEFT JOIN order_details ON products.productid = order_details.productid
+WHERE orderid is NULL;
+-- ; 3. czy są dostawcy, którzy nic nie dostarczyli?
+
+SELECT
+    SupplierName
+FROM suppliers
+    LEFT JOIN products ON suppliers.SupplierID = products.SupplierID
+WHERE ProductID IS NULL;
+
+INSERT INTO suppliers
+(SupplierName)
+VALUES
+('Andrzej');
+
+-- ; 4. Ile zamówień obsłużyli poszczególni pracownicy? Wyświetl dane malejąco według ilości zamówień. Czy są pracownicy, którzy nic nie obsłużyli?
+
+SELECT
+    LastName,
+    FirstName,
+    COUNT(OrderDate) AS ilosc_zamowien
+FROM employees
+    LEFT JOIN orders USING (EmployeeID)
+GROUP BY EmployeeID
+ORDER BY ilosc_zamowien DESC;
+
+-- ; 5. wszystkich pracowników,  daty zamówień, wszystkich klientów
+
+SELECT 
+    LastName,
+    OrderDate,
+    CustomerName
+FROM employees
+    LEFT JOIN orders ON employees.EmployeeID = orders.EmployeeID
+    RIGHT JOIN customers ON orders.CustomerID = customers.CustomerID;
+
+-- ; 6. interesują nas zamówienia klientów z Francji, Niemiec, Włoch. Wyświetl nazwę klienta, ilość zamówień. Uwzględnij także klientów, którzy nic nie zamawiali.
+
+SELECT
+    CustomerName,
+    COUNT(OrderDate) as ilosc_zamowien
+FROM customers
+    LEFT JOIN orders ON customers.CustomerID = orders.CustomerID
+WHERE Country IN('Germany','France','Italy')
+GROUP BY CustomerName;
+
+-- ; 7. Oblicz ile sztuk poszczególnych towarów zostało zamówione (zsumuj pole Quantity z  tabeli OrderDetails. Podaj nazwę towaru, cenę, łączną zamówioną ilość. Zestawienie posortuj według zamówionych ilości, uwzględnij tylko ilości mniejsze od 10. Uwzględnij tylko zamówione towary
+SELECT SUM(Quantity) as laczna_zamowiona_ilosc, ProductName, Price
+FROM products
+    LEFT JOIN order_details ON products.ProductID = order_details.ProductID
+GROUP BY products.ProductID
+HAVING laczna_zamowiona_ilosc < 10;
+
+INSERT INTO products
+(ProductName)
+VALUES
+('Produkt');
+
+-- ; 8. Oblicz łączną wartość zamówionych towarów (wykorzystaj pole cena i quantity). Wyświetl nazwę towaru, zamówioną wartość, dane posortuj malejąco według wartości towarów, wyświetl tylko pierwsze 10 wierszy. Uwzględnij wszystkie towary.
+
+SELECT SUM(Price * Quantity), productName
+FROM order_details
+    RIGHT JOIN Products ON order_details.ProductID = Products.ProductID
+GROUP BY products.ProductID
+ORDER BY SUM(Price * Quantity) DESC
+LIMIT 10;
+
+-- ; 9. Ile razy były zamawiane poszczególne towary? Wyświetl nazwę kategorii, nazwę towaru, policz ilość zamówień. Uwzględnij tylko zamówienia z 1997 roku. Wyświetl tylko te towary, które były zamawiane rzadziej niż 5 razy, w tym te, które nie zostały zamówione ani razu. Dane posortuj według nazwy kategorii, a następnie nazwy towaru
