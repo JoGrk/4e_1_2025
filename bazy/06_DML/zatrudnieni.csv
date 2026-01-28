@@ -1,0 +1,5 @@
+ID;LOGIN;NAZWISKO;IMIE;DATA_WPISU;AUTOR_WPISU;EMAIL;SEKTOR
+1;abk;Kowalski;Kamil;2015-03-08;ibn;abk@komis.eu;3
+2;wit;Witkowski;Witold;2015-03-05;ktc;wit@komis.eu;2
+3;agam;Miastek;Agata;2015-03-07;ktc;agam@komis.eu;4
+4;skos;Skowron;Szymon;2015-03-06;ktc;skos@komis.eu;4
