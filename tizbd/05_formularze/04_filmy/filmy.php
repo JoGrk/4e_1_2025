@@ -12,10 +12,27 @@
         $result = $link -> query($sql); 
     } 
 
+
+    $IDfilm_f = $_POST['IDfilm_f']??'';
+    $tytul_f = $_POST['tytul_f']??'';
+
+    if($IDfilm_f && $tytul_f){
+        $sql = "UPDATE filmy
+                SET Tytul = '$tytul_f'
+                WHERE idfilm = $IDfilm_f";
+        $result = $link -> query($sql);
+    }
+
+    
     $sql = "SELECT *
             FROM rezyserzy;";
     $result = $link -> query($sql);
     $directors = $result -> fetch_all(1);
+
+    $sql = "SELECT *
+            FROM filmy";
+    $result = $link -> query($sql);
+    $movies = $result -> fetch_all(1);
 ?>
 
 <!DOCTYPE html>
@@ -53,10 +70,30 @@
     </form>
 
     <h2>Filmy</h2>
+    <h3>lista filmów</h3>
+    <table>
+        <tr>
+            <th>ID filmu</th>
+            <th>Tytuł</th>
+        </tr>
+        <!-- <tr>
+            <td> [IDFilm] </td>
+            <td> [Tytul] </td>
+        </tr> -->
+
+        <?php
+        foreach($movies as $movie){
+            echo "<tr>
+                    <td> {$movie['IDFilm']} </td>
+                    <td> {$movie['Tytul']} </td>
+                </tr>";
+        }
+        ?>
+    </table>
 
     <h3>Zmiana tytulu filmu</h3>
     <form action="" method="post">
-        <label for="IDfilm">Filmy</label>
+        <label for="IDfilm">Id filmu</label>
         <input type="number" name="IDfilm_f" id="IDfilm"><br>
 
         <label for="tytul">nowy tytul</label>
