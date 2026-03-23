@@ -10,9 +10,39 @@
                 (imie,nazwisko,kod)
                 VALUES
                 ('$first_name_f','$last_name_f','');
-        "
+        ";
+        $result = $link -> query($sql);
     }
-    
+
+    // formularz ksiazki
+    $book_id_f = $_POST['book-id'] ?? '';
+
+    if($book_id_f){
+        $sql = "
+            DELETE FROM ksiazki
+            WHERE id = $book_id_f
+        ";
+        $result = $link -> query($sql);
+    }
+
+    $sql = "
+            SELECT ksiazki.id, tytul, imie, nazwisko
+            FROM Autorzy
+                INNER JOIN ksiazki ON autorzy.id = ksiazki.id_autor;";
+    $result = $link -> query($sql);
+    $books = $result -> fetch_all(1);
+
+    $sql = "SELECT 
+                wypozyczenia.id,
+                tytul,
+                nazwisko,
+                data_oddania
+            FROM wypozyczenia
+                INNER JOIN ksiazki ON wypozyczenia.id_ksiazka = ksiazki.id
+                INNER JOIN czytelnicy ON wypozyczenia.id_czytelnik = czytelnicy.id;
+            ";
+    $result = $link -> query($sql);
+    $borrows = $result -> fetch_all(1);
 ?>
 
 
@@ -37,6 +67,16 @@
 
     <ul>
         <!-- Skrypt B -->
+         <!-- <li><strong>[id]</strong> [tytul], [imie] [nazwisko] </li> -->
+
+        <?php
+        foreach($books as $book){
+            echo"<li><strong>{$book['id']}</strong> {$book['tytul']}
+            , {$book['imie']} {$book['nazwisko']} </li>";
+        }
+        ?>
+         
+         
     </ul>
 
     <form action="" method="post">
@@ -54,6 +94,25 @@
             <th>data oddania</th>
         </tr>
         <!-- skrypt d -->
+         <tr>
+            <td>[id]</td>
+            <td>[tytul]</td>
+            <td>[nazwisko]</td>
+            <td>[data_oddania]</td>
+         </tr>
+         <?php
+                foreach($borrows as $borrow){
+                    echo"  
+        <tr>
+            <td>{$borrow['id']}</td>
+            <td>{$borrow['tytul']}</td>
+            <td>{$borrow['nazwisko']}</td>
+            <td>{$borrow['data_oddania']}</td>
+         </tr>
+            ";
+                }
+                    
+?>
     </table>
 
     <form action="" method="post">
