@@ -32,3 +32,12 @@ UPDATE wypozyczenia
 SET data_oddania = CURRENT_DATE
 WHERE id = 2;
 
+-- F. wyświetla id czytelnika, imię i nazwisko
+SELECT id, imie, nazwisko
+FROM czytelnicy;
+-- G. doda nowe wypozyczenie, czytelnik o id 1 oraz ksiązki o id 2, ustawiając datę wypozyczenia na bieżącą datę
+INSERT INTO wypozyczenia
+(id_czytelnik, id_ksiazka, data_wypozyczenia)
+VALUES
+(1, 2, CURRENT_DATE);
+
