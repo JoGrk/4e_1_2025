@@ -8,7 +8,10 @@ VALUES
 -- 2. Wyświetla dostępne dania (wybierz wersję): 
 -- nazwy typów dań i nazwy dań wraz z ceną (tabela dania i typy_dan)
 
-SELECT dania.nazwa, cena, typy_dan.nazwa
+SELECT
+    dania.nazwa AS danie,
+    cena,
+    typy_dan.nazwa AS typ
 FROM dania  
     INNER JOIN typy_dan ON dania.typ = typy_dan.id;
 -- lub niżej punktowane zapytanie wyświetlajace tylko id typu, nazwę i cenę z tabeli dania 
