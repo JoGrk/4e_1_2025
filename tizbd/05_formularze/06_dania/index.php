@@ -2,12 +2,6 @@
 
     $link = new mysqli('localhost','root','','4e_1_baza');
 
-    $sql = "SELECT 
-                id,
-                nazwa
-            FROM typy_dan";
-    $result = $link -> query($sql);
-    $types = $result -> fetch_all(1);
 
 ?>
 <!DOCTYPE html>
@@ -27,12 +21,7 @@
         <label for="dish-type">Typ dania:</label>
         <select name="dish-type" id="dish-type">
             <!-- skrypt a -->
-             <!-- <option value='[id]'>[nazwa]</option> -->
-            <?php
-                foreach($types as $type)
-                    echo"<option value='{$type['id']}'>{$type['nazwa']}</option>";
-                
-            ?>
+          
         </select><br>
 
         <label for="price">Cena</label>
