@@ -85,8 +85,38 @@ WHERE SUPPLIERID IN(
 );
 -- 4. Usuń wszystkie produkty z kategorii  o opisie "Cheeses" (Description)  o cenie większej od 50
 
--- 5. Zwiększ o 10% cenę wszystkich produktów z kategorii o nazwie zaczynającej się na literę C 
+DELETE FROM Products
+WHERE Price > 50
+    AND CategoryID IN (
+    SELECT CategoryID
+    FROM categories
+    WHERE Description LIKE 'Cheeses' 
+);
 
+SELECT ProductID
+FROM Products
+    INNER JOIN Categories USING(CategoryID)
+WHERE Description = 'Cheeses'
+    AND Price > 50;
+
+UPDATE order_details
+SET ProductID = NULL
+WHERE ProductID IN (
+    SELECT ProductID
+    FROM Products
+        INNER JOIN Categories USING(CategoryID)
+    WHERE Description = 'Cheeses'
+        AND Price > 50
+);
+
+-- 5. Zwiększ o 10% cenę wszystkich produktów z kategorii o nazwie zaczynającej się na literę C 
+UPDATE products
+SET Price = Price * 1.10
+WHERE CategoryID IN (
+    SELECT CategoryID
+    FROM categories
+    WHERE CategoryName LIKE 'c%'
+);
 -- 6. Usuwamy wszystkie produkty dostarczane przez dostawców z USA
 
 -- 7. Usuń wszystkie zamówienia z Orders złożone przez klientów z Londynu ('London').
@@ -94,17 +124,58 @@ WHERE SUPPLIERID IN(
  
 -- Podzapytania wybierające jedną wartość
 -- 1. Podaj wszystkie produkty których cena jest mniejsza niż średnia cena produktu danej kategorii 
+
+SELECT
+    productname
+FROM products
+WHERE price < (
+    SELECT
+        AVG(price)
+    FROM products AS p
+    WHERE p.categoryid = products.categoryid
+);
+
+SELECT
+    AVG(price)
+FROM products
+WHERE Categoryid = 1;
  
 -- 2. Dla każdego produktu podaj jego nazwę, cenę, średnią cenę wszystkich produktów oraz różnicę między ceną produktu a średnią ceną wszystkich produktów
  
- 
+SELECT
+    productname,
+    price,
+    (SELECT
+        ROUND(AVG(price),2)
+    FROM products) AS s,
+    price - (SELECT
+            ROUND(AVG(price),2)
+        FROM products)
+FROM products;
+
+
+SELECT
+    ROUND(AVG(price),2)
+FROM products;
  
  
  
  
 -- ------------------ NIETYPOWE ----------------------------------------------------------------------------
 -- 1. Podaj produkty kupowane przez więcej niż 10 klientów (lub 10 różnych klientów - wsk. utwórz zapytanie wybierające różne wiersze CustomerID, ProductID z tabel Orders i OrdersDetalis i użyj jako podzapytanie w części FROM)
- 
+SELECT ProductID, productname
+FROM Products
+    INNER JOIN 
+WHERE ProductID IN(
+    SELECT Quantity
+    FROM OrderDetails
+    HAVING Quantity > 10
+)
+
+SELECT ProductID, productname
+FROM Products
+    INNER JOIN customers ON products.CustomerID = customers.CustomerID
+
 -- 2. Wybierz nazwy i numery telefonów klientów, którzy kupili więcej niż 3 różne produkty z kategorii .Confections.
  
 -- 3. Dla każdego produktu podaj maksymalną liczbę zamówionych jednostek
